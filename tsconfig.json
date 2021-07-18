@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "es2015",
+      "es2017",
+      "dom",
+      "esnext"
+    ],
+    "sourceMap": true,
+    "strict": true,
+    "removeComments": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "baseUrl": "src",
+    "paths": {
+      "services": ["services"],
+      "assets": ["assets"]
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "./webpack.config.js"
+  ]
+}
