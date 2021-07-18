@@ -12,7 +12,12 @@
     "strict": true,
     "removeComments": true,
     "downlevelIteration": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "src",
+    "paths": {
+      "services": ["services"],
+      "assets": ["assets"]
+    }
   },
   "include": [
     "src/**/*.ts"

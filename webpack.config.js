@@ -33,43 +33,47 @@ const loaders = env => ({
               reloadAll: true,
             },
           },
-      {loader: 'css-loader', options: {sourceMap: env.development}},
-      {loader: 'postcss-loader', options: {sourceMap: env.development}},
-      {loader: 'resolve-url-loader'},
-      {loader: 'sass-loader', options: {sourceMap: env.development}},
+      { loader: 'css-loader', options: { sourceMap: env.development } },
+      { loader: 'postcss-loader', options: { sourceMap: env.development } },
+      { loader: 'resolve-url-loader' },
+      { loader: 'sass-loader', options: { sourceMap: env.development } },
     ],
   },
   img: {
-    test: /\.(png|svg|jpg|gif)$/,
+    test: /\.(png|svg|jpg|jpeg|gif)$/i,
     include: path.resolve(__dirname, 'src'),
-    use: [
-      'file-loader',
-      {
-        loader: 'image-webpack-loader',
-        options: {
-          bypassOnDebug: true,
-          disable: false,
-          optipng: {
-            enabled: true,
-          },
-          mozjpeg: {
-            progressive: true,
-            quality: 65,
-          },
-          gifsicle: {
-            interlaced: false,
-          },
-          webp: {
-            quality: 75,
-          },
-        },
-      },
-    ],
+    type: 'asset/resource',
+    // use: [
+    //   {
+    //     loader: 'image-webpack-loader',
+    //     options: {
+    //       bypassOnDebug: true,
+    //       disable: false,
+    //       optipng: {
+    //         enabled: true,
+    //       },
+    //       mozjpeg: {
+    //         progressive: true,
+    //         quality: 65,
+    //       },
+    //       gifsicle: {
+    //         interlaced: false,
+    //       },
+    //       webp: {
+    //         quality: 75,
+    //       },
+    //     },
+    //   },
+    // ],
   },
   fonts: {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
     include: path.resolve(__dirname, 'src'),
     use: ['file-loader'],
+  },
+  html: {
+    test: /\.html$/i,
+    loader: 'html-loader',
   },
   ts: {
     test: /\.ts?$/,
@@ -139,11 +143,6 @@ module.exports = env => {
       clean: true,
     },
     plugins: [
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery',
-      }),
       new ForkTsCheckerWebpackPlugin({
         eslint: {
           files: './src/*.ts',
@@ -155,9 +154,9 @@ module.exports = env => {
           : '[name].[contenthash].css',
       }),
       new HtmlWebpackPlugin({
-        title: 'v-slider',
+        title: 'Todo',
         filename: 'index.html',
-        template: path.resolve(__dirname, 'src/index.pug'),
+        template: path.resolve(__dirname, 'src/index.html'),
         minify: {
           removeComments: env.production,
           collapseWhiteSpace: env.production,
@@ -170,14 +169,16 @@ module.exports = env => {
       rules: [
       loaders(env).fonts,
       loaders(env).img,
-      loaders(env).pug,
       loaders(env).sass,
       loaders(env).ts,
+      loaders(env).html
     ]},
     resolve: {
       extensions: ['.ts', '.js'],
       alias: {
-        root: path.resolve(__dirname, 'src/'),
+        ui: path.resolve(__dirname, './src/ui/'),
+        services: path.resolve(__dirname, './src/services/'),
+        assets: path.resolve(__dirname, './src/assets/')
       },
     },
     optimization: optimization(env),
